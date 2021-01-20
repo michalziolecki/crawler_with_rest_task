@@ -22,6 +22,7 @@ class RequestController:
         test = datetime.datetime.now()
         # self.img_scraper.run_scraping(content=response.content)
         # self.text_scraper.run_scraping(content=response.content)
+        # print(response.text)
         t_scraper_proccess = Process(target=self.text_scraper.run_scraping, args=(response.content,))
         i_scraper_proccess = Process(target=self.img_scraper.run_scraping, args=(content_copy,))
         if find_text:

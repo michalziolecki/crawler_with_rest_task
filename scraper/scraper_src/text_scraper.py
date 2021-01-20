@@ -10,6 +10,10 @@ class TextScraper(AbstractScraper):
         super().__init__(locker)
 
     def run_scraping(self, content):
-        print(f'type=={type(content)}')
         soup = BeautifulSoup(content, 'html.parser')
-        # soup.find_all('img')
+        visible_text: str = soup.getText()
+        lines = visible_text.split('\n')
+        for line in lines:
+            if not line or len(line) <= line.count(' '):
+                continue
+            print(f'{line}')
