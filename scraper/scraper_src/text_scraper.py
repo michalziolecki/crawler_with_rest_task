@@ -14,6 +14,6 @@ class TextScraper(AbstractScraper):
         visible_text: str = soup.getText()
         lines = visible_text.split('\n')
         for line in lines:
-            if not line or len(line) <= line.count(' '):
+            if not line or len(line) - 1 <= line.count(' '):
                 continue
             print(f'{line}')
