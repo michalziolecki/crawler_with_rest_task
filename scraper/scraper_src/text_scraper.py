@@ -12,8 +12,15 @@ class TextScraper(AbstractScraper):
     def run_scraping(self, content):
         soup = BeautifulSoup(content, 'html.parser')
         visible_text: str = soup.getText()
+        TextScraper.prepare_text_lines(visible_text)
+
+    @staticmethod
+    def prepare_text_lines(visible_text) -> list:
+        text_list = []
         lines = visible_text.split('\n')
         for line in lines:
             if not line or len(line) - 1 <= line.count(' '):
                 continue
-            print(f'{line}')
+            # TODO create db entity with text and append to list
+            text_list.append(line)
+        return text_list
