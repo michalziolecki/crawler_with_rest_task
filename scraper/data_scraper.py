@@ -1,15 +1,17 @@
 import getopt
 import sys
 
+from scraper_src.request_controller import RequestController
+
 
 def main(argv):
-    web_addr = ''
+    url = ''
     text_lookup = False
     img_lookup = False
     try:
         opts, args = getopt.getopt(argv, 'htil:', ['help', 'text', 'img', 'link='])
     except getopt.GetoptError:
-        print('data_scraper.py -l <link> -t -i')
+        print('Correct run: `data_scraper.py -l <link> -t -i`')
         sys.exit(11)
     for opt, arg in opts:
         if opt == '-h' or opt == '--help':
@@ -23,17 +25,18 @@ def main(argv):
         elif opt in ('-t', '--text'):
             text_lookup = True
         elif opt in ('-l', '--link'):
-            web_addr = arg
+            url = arg
 
     if not text_lookup and not img_lookup:
         print('Nothing to looking for...')
         sys.exit(0)
 
-    if not web_addr:
+    if not url:
         print('Incorrect input - link is empty!')
         sys.exit(12)
 
-    print(f'test web_addr={web_addr}; text_lookup={text_lookup}; img_lookup={img_lookup} ')
+    controller = RequestController()
+    controller.run_request(url, text_lookup, img_lookup)
 
 
 if __name__ == '__main__':
