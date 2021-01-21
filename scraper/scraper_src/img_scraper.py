@@ -47,8 +47,8 @@ class ImageScraper(AbstractScraper):
                 correct_source, src = check_source(src, 'https://')
                 if not correct_source:
                     correct_source, src = check_source(src, 'http://')
-            # TODO create database entity and append to list
             if correct_source:
+                # TODO create database entity and append to list
                 images_list.append(image)
         return images_list
 
