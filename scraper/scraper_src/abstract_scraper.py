@@ -12,5 +12,5 @@ class AbstractScraper(ABC):
         return self._locker
 
     @abstractmethod
-    def run_scraping(self, content):
+    def run_scraping(self, content, web_entity):
         pass

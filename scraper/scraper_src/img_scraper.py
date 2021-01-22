@@ -1,4 +1,4 @@
-from asyncio import Lock
+from multiprocessing import Lock
 
 import requests
 from bs4 import BeautifulSoup
@@ -7,21 +7,22 @@ from requests import Response
 from rest_framework.status import HTTP_200_OK
 
 from scraper_src.abstract_scraper import AbstractScraper
-
+from data.utils import include_django_orm
+include_django_orm()
+from data.models import ImageData
 
 class ImageScraper(AbstractScraper):
 
     def __init__(self, locker: Lock):
         super().__init__(locker)
 
-    def run_scraping(self, content):
+    def run_scraping(self, content, web_entity):
         soup = BeautifulSoup(content, 'html.parser')
         images = soup.find_all('img')
-        images_db = ImageScraper.prepare_linked_images(images)
-        ImageScraper.save_images_in_db(images_db)
+        ImageScraper.prepare_linked_images(images, web_entity)
 
     @staticmethod
-    def prepare_linked_images(images) -> list:
+    def prepare_linked_images(images, web_entity):
 
         def check_source(link: str, prefix='') -> tuple:
             link = f'{prefix}{link}'
@@ -31,7 +32,6 @@ class ImageScraper(AbstractScraper):
                 return True, link
             return False, link
 
-        images_list = []
         for image in images:
             image: Tag
             alt = image.get('alt')
@@ -48,10 +48,5 @@ class ImageScraper(AbstractScraper):
                 if not correct_source:
                     correct_source, src = check_source(src, 'http://')
             if correct_source:
-                # TODO create database entity and append to list
-                images_list.append(image)
-        return images_list
-
-    @staticmethod
-    def save_images_in_db(images):
-        pass
+                img_entity = ImageData(related_web_addr=web_entity, alt=alt, src=src)
+                img_entity.save()

@@ -1,6 +1,7 @@
 import getopt
 import sys
 
+from rest_framework.status import HTTP_200_OK, HTTP_300_MULTIPLE_CHOICES
 from scraper_src.request_controller import RequestController
 
 
@@ -36,7 +37,14 @@ def main(argv):
         sys.exit(12)
 
     controller = RequestController()
-    controller.run_request(url, text_lookup, img_lookup)
+    http_status = controller.run_request(url, text_lookup, img_lookup)
+
+    if http_status < HTTP_200_OK or http_status > HTTP_300_MULTIPLE_CHOICES:
+        print(f'operation fail - http_status={http_status}')
+        sys.exit(13)
+
+    print(f'operation success!')
+    sys.exit(0)
 
 
 if __name__ == '__main__':
