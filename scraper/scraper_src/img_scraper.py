@@ -19,9 +19,10 @@ class ImageScraper(AbstractScraper):
         super().__init__(locker)
 
     def run_scraping(self, content, web_entity):
-        soup = BeautifulSoup(content, 'html.parser')
-        images = soup.find_all('img')
-        ImageScraper.prepare_linked_images(images, web_entity)
+        with self.locker:
+            soup = BeautifulSoup(content, 'html.parser')
+            images = soup.find_all('img')
+            ImageScraper.prepare_linked_images(images, web_entity)
 
     @staticmethod
     def prepare_linked_images(images, web_entity):
