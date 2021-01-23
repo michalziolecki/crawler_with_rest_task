@@ -28,7 +28,7 @@ def test_create_web_address():
 def test_create_text_data(create_default_web_address):
     # given
     web = create_default_web_address()
-    text_entity = TextData(text='test_link', related_web_addr=web)
+    text_entity = TextData(text='test_text', related_web_addr=web)
     # when
     text_entity.save()
     # then
@@ -43,7 +43,7 @@ def test_create_text_data(create_default_web_address):
 def test_create_image_data(create_default_web_address):
     # given
     web = create_default_web_address()
-    image_entity = ImageData(alt='test_link', src='http://abc.com', related_web_addr=web)
+    image_entity = ImageData(alt='test_alt', src='http://abc.com', related_web_addr=web)
     # when
     image_entity.save()
     # then
