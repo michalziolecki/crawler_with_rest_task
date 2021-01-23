@@ -8,8 +8,10 @@ from rest_framework.status import HTTP_200_OK
 
 from scraper_src.abstract_scraper import AbstractScraper
 from data.utils import include_django_orm
+
 include_django_orm()
 from data.models import ImageData
+
 
 class ImageScraper(AbstractScraper):
 
