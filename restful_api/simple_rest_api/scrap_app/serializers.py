@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import WebAddress
+from .models import WebAddress, ImageData, TextData
 
 
 class WebAddressSerializer(ModelSerializer):
@@ -18,7 +18,7 @@ class WebAddressSerializer(ModelSerializer):
 
 class ImageDataSerializer(ModelSerializer):
     class Meta:
-        model = WebAddress
+        model = ImageData
         fields = [
             'uuid',
             'related_web_addr',
@@ -33,7 +33,7 @@ class ImageDataSerializer(ModelSerializer):
 
 class TextDataSerializer(ModelSerializer):
     class Meta:
-        model = WebAddress
+        model = TextData
         fields = [
             'uuid',
             'related_web_addr',
