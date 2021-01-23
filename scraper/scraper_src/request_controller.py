@@ -6,7 +6,7 @@ import copy
 from django.utils import timezone
 from scraper_src.img_scraper import ImageScraper
 from scraper_src.text_scraper import TextScraper
-from rest_framework.status import HTTP_200_OK, HTTP_300_MULTIPLE_CHOICES
+from rest_framework.status import HTTP_200_OK, HTTP_300_MULTIPLE_CHOICES, HTTP_404_NOT_FOUND
 from data.utils import include_django_orm
 include_django_orm()
 
@@ -22,7 +22,15 @@ class RequestController:
         self.text_scraper = TextScraper(self.text_locker)
 
     def run_request(self, url: str, find_text: bool, find_img: bool) -> int:
-        response: Response = requests.get(url)
+        if not url.startswith('http'):
+            print('Incorrect url! Add http prefix!')
+            return HTTP_404_NOT_FOUND
+
+        try:
+            response: Response = requests.get(url)
+        except requests.exceptions.RequestException as re:
+            print(f'Incorrect url! Info: {re.args}')
+            return HTTP_404_NOT_FOUND
 
         if response.status_code < HTTP_200_OK or response.status_code >= HTTP_300_MULTIPLE_CHOICES:
             return response.status_code

@@ -30,7 +30,7 @@ class ImageScraper(AbstractScraper):
             link = f'{prefix}{link}'
             try:
                 response: Response = requests.get(link)
-            except requests.exceptions.RequestException:
+            except:
                 return False, link
             content_type: str = response.headers.get('Content-Type')
             if response.status_code == HTTP_200_OK and 'image' in content_type:
