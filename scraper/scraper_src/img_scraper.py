@@ -28,7 +28,10 @@ class ImageScraper(AbstractScraper):
 
         def check_source(link: str, prefix='') -> tuple:
             link = f'{prefix}{link}'
-            response: Response = requests.get(link)
+            try:
+                response: Response = requests.get(link)
+            except requests.exceptions.RequestException:
+                return False, link
             content_type: str = response.headers.get('Content-Type')
             if response.status_code == HTTP_200_OK and 'image' in content_type:
                 return True, link
