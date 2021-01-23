@@ -8,9 +8,9 @@ app_name = 'scrap_app'
 urlpatterns = [
 ]
 
-# router = SimpleRouter()
-# router.register('scrap_app', WebAddressViewSet, basename='webaddress')
-# router.register('scrap_app', ImageDataViewSet, basename='imagedata')
-# router.register('scrap_app', TextDataViewSet, basename='textdata')
+router = SimpleRouter()
+router.register('scrap-api', WebAddressViewSet, basename='webaddress')
+router.register('scrap-api', ImageDataViewSet, basename='imagedata')
+router.register('scrap-api', TextDataViewSet, basename='textdata')
 
-# urlpatterns += router.urls
+urlpatterns += router.urls
