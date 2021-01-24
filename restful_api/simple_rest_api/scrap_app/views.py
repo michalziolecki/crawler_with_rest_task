@@ -24,7 +24,7 @@ class WebAddressViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid()
         url: str = serializer.data.get('link', None)
         if not url or not url.startswith('http'):
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST,
