@@ -1,14 +1,17 @@
-from django.shortcuts import render
+import subprocess
 
-# Create your views here.
+from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import status
+from rest_framework.response import Response
 
 from .filters import ImageDataFilterSet, TextDataFilterSet
 from .serializers import WebAddressSerializer, ImageDataSerializer, TextDataSerializer
 from .models import WebAddress, ImageData, TextData
+import os
 
 
 class WebAddressViewSet(ModelViewSet):
@@ -16,6 +19,32 @@ class WebAddressViewSet(ModelViewSet):
     queryset = WebAddress.objects.all()
     serializer_class = WebAddressSerializer
     lookup_field = 'uuid'
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    search_fields = ['link']
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        url: str = serializer.data.get('link', None)
+        if not url or not url.startswith('http'):
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST,
+                            headers={'result': 'fail', 'info': 'bad input'})
+        # self.perform_create(serializer)
+        # headers = self.get_success_headers(serializer.data)
+        shell_result = self.run_scraper(url)
+        print(f'shell_result={shell_result}')
+        # if shell_result != 0:
+        #     return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST,
+        #                     headers={'result': 'fail', 'info': 'scraper bad status',
+        #                              'scraper status': f'{shell_result}'})
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers={'result': 'success'})
+
+    def run_scraper(self, url):
+        scraper_path = os.path.join(settings.SEMANTIVE_DIR, 'scraper', 'data_scraper.py')
+        command = f'python {scraper_path} -l {url} -t -i'
+        print(f'command={command}')
+        # return os.system(command)
+        return subprocess.Popen(command, shell=True)
 
 
 class ImageDataViewSet(ModelViewSet):
