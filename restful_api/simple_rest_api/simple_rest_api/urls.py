@@ -5,7 +5,7 @@ from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
-
+from django.conf.urls.static import static
 """
 Doc endpoints:
     A JSON view of your API specification at file-doc/swagger.json
@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'file-doc/swagger(?P<format>\.json|\.yaml)', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('core-api-doc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     urlpatterns += [

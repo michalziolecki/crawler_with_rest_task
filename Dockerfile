@@ -6,6 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN mkdir /scraper_service
+RUN mkdir /static
 WORKDIR /scraper_service
 
 COPY requirements /scraper_service/
@@ -20,6 +21,7 @@ RUN ls -la /scraper_service/restful_api/*
 
 # migrate db
 RUN python /scraper_service/restful_api/simple_rest_api/manage.py migrate
+RUN python /scraper_service/restful_api/simple_rest_api/manage.py collectstatic
 # prepare and run service
 ENTRYPOINT ["python"]
 CMD ["/scraper_service/restful_api/simple_rest_api/manage.py", "runserver", "0.0.0.0:8000"]
