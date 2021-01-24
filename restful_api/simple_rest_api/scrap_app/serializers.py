@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from .models import WebAddress, ImageData, TextData
@@ -17,6 +18,8 @@ class WebAddressSerializer(ModelSerializer):
 
 
 class ImageDataSerializer(ModelSerializer):
+    related_web_addr = serializers.UUIDField(source='related_web_addr.uuid', read_only=True)
+
     class Meta:
         model = ImageData
         fields = [
@@ -32,6 +35,8 @@ class ImageDataSerializer(ModelSerializer):
 
 
 class TextDataSerializer(ModelSerializer):
+    related_web_addr = serializers.UUIDField(source='related_web_addr.uuid', read_only=True)
+
     class Meta:
         model = TextData
         fields = [
