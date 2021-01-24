@@ -19,7 +19,7 @@ RUN ls -la /scraper_service/scraper/*
 RUN ls -la /scraper_service/restful_api/*
 
 # migrate db
-RUN python /scraper_service/restful_api/manage.py migrate
+RUN python /scraper_service/restful_api/simple_rest_api/manage.py migrate
 # prepare and run service
 ENTRYPOINT ["python"]
-CMD ["/scraper_service/restful_api/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["/scraper_service/restful_api/simple_rest_api/manage.py", "runserver", "0.0.0.0:8000"]
