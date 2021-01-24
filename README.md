@@ -2,6 +2,9 @@
 
 author MZ
 
+### Technology stack ###
+Python 3.9, Django, DRF, DjangoORM, Request, BeautifulSoup, Git + Git Flow, Swagger(Open API 2.0), Pytest, Docker
+
 ### Requirements ###
 * Python3.9
 * Unoccupied port 8000
@@ -38,7 +41,7 @@ author MZ
 
 * Command to run all test (from directory with manage.py):
 	`pytest scraper`
-	`pytest restful_api`
+	`pytest restful_api/simple_rest_api/`
 
 ### Run with Docker ###
 
