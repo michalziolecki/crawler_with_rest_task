@@ -29,22 +29,17 @@ class WebAddressViewSet(ModelViewSet):
         if not url or not url.startswith('http'):
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST,
                             headers={'result': 'fail', 'info': 'bad input'})
-        # self.perform_create(serializer)
-        # headers = self.get_success_headers(serializer.data)
         shell_result = self.run_scraper(url)
-        print(f'shell_result={shell_result}')
-        # if shell_result != 0:
-        #     return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST,
-        #                     headers={'result': 'fail', 'info': 'scraper bad status',
-        #                              'scraper status': f'{shell_result}'})
+        if shell_result != 0:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST,
+                            headers={'result': 'fail', 'info': 'scraper bad status',
+                                     'scraper status': f'{shell_result}'})
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers={'result': 'success'})
 
     def run_scraper(self, url):
         scraper_path = os.path.join(settings.SEMANTIVE_DIR, 'scraper', 'data_scraper.py')
         command = f'python {scraper_path} -l {url} -t -i'
-        print(f'command={command}')
-        # return os.system(command)
-        return subprocess.Popen(command, shell=True)
+        return os.system(command)
 
 
 class ImageDataViewSet(ModelViewSet):
