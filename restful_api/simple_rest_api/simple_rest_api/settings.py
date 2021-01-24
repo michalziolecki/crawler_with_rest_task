@@ -20,10 +20,10 @@ SEMANTIVE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'cm!p&_(xiq(2!3l*hygc#kes3k&aud_q0jxaul9pl)3)4f9t9q'
+SECRET_KEY = 'cm!p&_(xiq(2!3l*sadac#kes3k&aud_q0jxaul9pl)3)4f9t9q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
