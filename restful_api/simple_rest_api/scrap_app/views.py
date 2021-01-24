@@ -30,11 +30,16 @@ class WebAddressViewSet(ModelViewSet):
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST,
                             headers={'result': 'fail', 'info': 'bad input'})
         shell_result = self.run_scraper(url)
+        output = {}
         if shell_result != 0:
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST,
                             headers={'result': 'fail', 'info': 'scraper bad status',
                                      'scraper status': f'{shell_result}'})
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers={'result': 'success'})
+        else:
+            web = WebAddress.objects.filter(link=f'{url}').get()
+            output.update({'uuid': f'{web.uuid}'})
+        output.update(serializer.data)
+        return Response(output, status=status.HTTP_201_CREATED, headers={'result': 'success'})
 
     def run_scraper(self, url):
         scraper_path = os.path.join(settings.SEMANTIVE_DIR, 'scraper', 'data_scraper.py')
