@@ -2,6 +2,9 @@
 
 author MZ
 
+### Technology stack ###
+Python 3.9, Django, DRF, DjangoORM, Request, BeautifulSoup, Git + Git Flow, Swagger(Open API 2.0), Pytest, Docker
+
 ### Requirements ###
 * Python3.9
 * Unoccupied port 8000
