@@ -40,10 +40,10 @@ class RequestController:
             web = WebAddress.objects.filter(link=url).get()
             if web.validity_term < timezone.now():
                 web.delete()  # delete cascade all connected to this link data
-                web = WebAddress(link=url)
+                web = WebAddress(link=url, scraped_text=find_text, scraped_images=find_img)
                 web.save()
         else:
-            web = WebAddress(link=url)
+            web = WebAddress(link=url, scraped_text=find_text, scraped_images=find_img)
             web.save()
 
         if web:

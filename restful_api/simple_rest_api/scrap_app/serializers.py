@@ -9,7 +9,9 @@ class WebAddressSerializer(ModelSerializer):
         model = WebAddress
         fields = [
             'uuid',
-            'link'
+            'link',
+            'scraped_text',
+            'scraped_images'
         ]
         read_only_fields = [
             'id',

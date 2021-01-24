@@ -8,6 +8,8 @@ from django.db.models.signals import pre_save
 class WebAddress(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     link = models.CharField(max_length=2048, null=False, unique=True)
+    scraped_text = models.BooleanField(default=False)
+    scraped_images = models.BooleanField(default=False)
     validity_term = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
