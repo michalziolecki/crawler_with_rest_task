@@ -9,8 +9,8 @@ urlpatterns = [
 ]
 
 router = SimpleRouter()
-router.register('scrap-api', WebAddressViewSet, basename='webaddress')
-router.register('scrap-api', ImageDataViewSet, basename='imagedata')
-router.register('scrap-api', TextDataViewSet, basename='textdata')
+router.register('web-address-api', WebAddressViewSet, basename='webaddress')
+router.register('image-data-api', ImageDataViewSet, basename='imagedata')
+router.register('text-data-api', TextDataViewSet, basename='textdata')
 
 urlpatterns += router.urls
