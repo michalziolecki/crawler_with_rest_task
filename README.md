@@ -41,7 +41,7 @@ Python 3.9, Django, DRF, DjangoORM, Request, BeautifulSoup, Git + Git Flow, Swag
 
 * Command to run all test (from directory with manage.py):
 	`pytest scraper`
-	`pytest restful_api`
+	`pytest restful_api/simple_rest_api/`
 
 ### Run with Docker ###
 
