@@ -1,0 +1,29 @@
+O rozwiazaniu:
+- Serwis składa się z dwóch części:
+    * Narzędzia konsolowego które służy do pobierania danych - scraper,
+    * RestAPI, które pozwala analizować dane i dodać elementy do przeszukania.
+- Rest API:
+    * Wykorzystuje narzędzie konsolowe scraper do obsługi pobierania danych ze stron,
+    * Zbudowane jest w opraciu o freamwork DRF,
+    * Czyta dane z bazy SQLite,
+    * W ścieżce root '/' posiada dokumentację Swagger (OpenAPI 2.0).
+- Scraper:
+    * Jest standalone rozwiązanie możliwym do uruchomienia poprzez konsole lub inną aplikację,
+    * Posiada dokumentację w postaci konsolowego helpa (flaga -h lub --help),
+    * Pozwala na scrapowanie danych poprzez podanie linku (parametr -l),
+    * Pozwala na wybór scrapowanych elelemntów (flaga -t od text i -i od image),
+    * Przykładowy input 'https://wp.pl',
+- Sposoby przygotowania środowiska lokalnie lub uruchomienia poprzez Docker opisane są w README.md.
+-  W celach optymalizacji czasu zapytań, wprowadziłem założenie, że wielokrotne zapytanie o tą samą witrynę,
+    nie wykonuje http request tylko zapytanie do bazy o istniejące wyniki w ciągu 24h.
+    Zakładam że kontent z tej strony z ostatnich 24h jest wystarczający.
+    Optymalizuje to czas wykonania operacji.
+    W celu optymalizacji warto w przyszłości to zadanie dodać do zakolejkowania.
+- Potencjalne # TODO:
+    * Dodanie loggera i logowania zdarzeń rotacyjnie do pliku. Zarówno w scraper jak i RestAPI,
+    * Większe pokrycie testami niż przykładowe,
+    * W celu uniknięcia oczekiwania na Response zapytania. Dodanie Celery w celu uruchamiana scrapera poza zapytaniem
+       i zwrócenie informacji "zakolejkowano" w RestAPI, ewentualnie oddelegowanie do osobnego procesu.
+    * Manualne testy w większej ilości. Testy wydajności.
+    * Utworzenie relacyjnej bazy danych np. Postegres w celu zastąpienia SQLite,
+    * Dodanie docker-compose w celu konteneryzacji RestAPI, Postgres, Celery i np. Rabbitmq/Redis,
