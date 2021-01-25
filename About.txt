@@ -27,3 +27,4 @@ O rozwiazaniu:
     * Manualne testy w większej ilości. Testy wydajności.
     * Utworzenie relacyjnej bazy danych np. Postegres w celu zastąpienia SQLite,
     * Dodanie docker-compose w celu konteneryzacji RestAPI, Postgres, Celery i np. Rabbitmq/Redis,
+    * Dodanie settingsów podzielonych na development i deployment oraz ukrycie wrażliwych danych np. modułem decouple
